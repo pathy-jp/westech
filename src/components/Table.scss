@@ -27,4 +27,27 @@
     margin-right: 5px;
     cursor: pointer;
   }
+
+  .sortable {
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+
+    &:hover {
+      background-color: #e0e0e0;
+    }
+
+    &.active {
+      background-color: #d0d0d0;
+    }
+
+    &::after {
+      content: attr(data-sort);
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.8em;
+    }
+  }
 }
