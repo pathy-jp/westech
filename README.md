@@ -1,4 +1,4 @@
-# WesTexh
+# WesTech
 
 Vytvorte aplikáciu pre zobrazenie pivot tabuľky predajnosti kategórií a ich produktov podľa predajní. Každý riadok bude reprezentovaný kategóriou a jej príslušnými produktami, ktoré bude možné zobraziť a skryť. V predvolenom stave budú skryté.
 
