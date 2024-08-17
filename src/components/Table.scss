@@ -1,0 +1,30 @@
+.pivot-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th,
+  td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+
+  th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+
+  .category-row {
+    font-weight: bold;
+    background-color: #e6e6e6;
+  }
+
+  .product-row {
+    background-color: #f9f9f9;
+  }
+
+  button {
+    margin-right: 5px;
+    cursor: pointer;
+  }
+}
