@@ -1,8 +1,7 @@
 import React, { useState, useMemo } from "react";
-import "./Table.scss";
 
 const Table = ({ data }) => {
-  const [expandedCategories, setExpandedCategories] = useState({});
+  const [expandedCategory, setExpandedCategory] = useState({});
   const [sort, setSort] = useState({ key: null, direction: null });
 
   // Memoized function to pivot and process the data
@@ -32,16 +31,16 @@ const Table = ({ data }) => {
     return { pivot, stores: Array.from(stores).sort() };
   }, [data]);
 
-  // Memoized function to sort the data based on the current sort state
-  const sortedData = useMemo(() => {
-    const sortableData = Object.entries(pivotData.pivot);
+  // Function to sort products within a category based on the current sort state
+  const getSortedProducts = (products) => {
+    const sortableProducts = Object.entries(products);
     if (sort.key === null) {
-      return sortableData;
+      return sortableProducts;
     }
 
-    return [...sortableData].sort((a, b) => {
-      const aValue = a[1].total[sort.key] || 0;
-      const bValue = b[1].total[sort.key] || 0;
+    return sortableProducts.sort((a, b) => {
+      const aValue = a[1][sort.key] || 0;
+      const bValue = b[1][sort.key] || 0;
 
       if (aValue < bValue) {
         return sort.direction === "asc" ? -1 : 1;
@@ -52,20 +51,23 @@ const Table = ({ data }) => {
       }
       return 0;
     });
-  }, [pivotData.pivot, sort]);
+  };
 
   // Function to toggle the expansion state of a category
   const toggleCategory = (category) => {
-    setExpandedCategories((prev) => ({ ...prev, [category]: !prev[category] }));
+    setExpandedCategory((prev) => (prev === category ? null : category));
   };
 
   // Function to handle sorting when a column header is clicked
   const handleSort = (key) => {
     let direction = "asc";
-    if (sort.key === key && sort.direction === "asc") {
-      direction = "desc";
-    } else if (sort.key === key && sort.direction === "desc") {
-      direction = null;
+    if (sort.key === key) {
+      if (sort.direction === "asc") {
+        direction = "desc";
+      } else if (sort.direction === "desc") {
+        direction = null;
+        key = null;
+      }
     }
     setSort({ key, direction });
   };
@@ -79,7 +81,6 @@ const Table = ({ data }) => {
         return "▼";
       }
     }
-
     return null;
   };
 
@@ -87,41 +88,55 @@ const Table = ({ data }) => {
     <table className="pivot-table">
       <thead>
         <tr>
-          <th>Kategória / Produkt</th>
+          <th className="category-span">Kategória / Produkt</th>
           {pivotData.stores.map((store) => (
             <th
               key={store}
               onClick={() => handleSort(store)}
-              className={`sortable ${sort.key === store ? "active" : ""}`}
+              className={`sortable ${
+                sort.key === store && sort.direction !== null ? "active" : ""
+              }`}
             >
               {store}
-              {getSortIcon(store)}
+              <span className="sort-icon">{getSortIcon(store)}</span>
             </th>
           ))}
         </tr>
       </thead>
       <tbody>
-        {sortedData.map(([category, categoryData]) => (
+        {Object.entries(pivotData.pivot).map(([category, categoryData]) => (
           <React.Fragment key={category}>
             <tr className="category-row">
-              <td>
-                <button onClick={() => toggleCategory(category)}>
-                  {expandedCategories[category] ? "−" : "+"}
-                </button>
-                {category}
+              <td
+                onClick={() => toggleCategory(category)}
+                className="category-header-cell"
+              >
+                <div className="category-header">
+                  <button>{expandedCategory === category ? "−" : "+"}</button>
+                  {category}
+                </div>
               </td>
               {pivotData.stores.map((store) => (
                 <td key={store}>{categoryData.total[store] || 0}</td>
               ))}
             </tr>
-            {/* Product rows (visible when category is expanded) */}
-            {expandedCategories[category] &&
-              Object.entries(categoryData.products).map(
+            {expandedCategory === category &&
+              getSortedProducts(categoryData.products).map(
                 ([product, productData]) => (
                   <tr key={product} className="product-row">
                     <td>{product}</td>
                     {pivotData.stores.map((store) => (
-                      <td key={store}>{productData[store] || 0}</td>
+                      <td
+                        key={store}
+                        style={{
+                          backgroundColor:
+                            sort.key === store ? "#c44536" : "inherit",
+                          color: sort.key === store ? "#edddd4" : "inherit",
+                          fontWeight: sort.key === store ? "500" : "inherit",
+                        }}
+                      >
+                        {productData[store] || 0}
+                      </td>
                     ))}
                   </tr>
                 )

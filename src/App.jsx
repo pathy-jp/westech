@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "./App.scss";
+import "./styles/main.scss";
 
 import Table from "./components/Table";
 
@@ -34,7 +34,7 @@ function App() {
 
   return (
     <div className="app">
-      <h1>Pivot tabuľka predajnosti</h1>
+      <h1>Tabuľka predajnosti</h1>
       {data.length > 0 && <Table data={data} />}
     </div>
   );
