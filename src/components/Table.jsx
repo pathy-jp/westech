@@ -5,10 +5,12 @@ const Table = ({ data }) => {
   const [expandedCategories, setExpandedCategories] = useState({});
   const [sort, setSort] = useState({ key: null, direction: null });
 
+  // Memoized function to pivot and process the data
   const pivotData = useMemo(() => {
     const pivot = {};
     const stores = new Set();
 
+    // Iterate through the data to create the pivot structure
     data.forEach((item) => {
       if (!pivot[item.category]) {
         pivot[item.category] = { total: {}, products: {} };
@@ -30,6 +32,7 @@ const Table = ({ data }) => {
     return { pivot, stores: Array.from(stores).sort() };
   }, [data]);
 
+  // Memoized function to sort the data based on the current sort state
   const sortedData = useMemo(() => {
     const sortableData = Object.entries(pivotData.pivot);
     if (sort.key === null) {
@@ -51,10 +54,12 @@ const Table = ({ data }) => {
     });
   }, [pivotData.pivot, sort]);
 
+  // Function to toggle the expansion state of a category
   const toggleCategory = (category) => {
     setExpandedCategories((prev) => ({ ...prev, [category]: !prev[category] }));
   };
 
+  // Function to handle sorting when a column header is clicked
   const handleSort = (key) => {
     let direction = "asc";
     if (sort.key === key && sort.direction === "asc") {
@@ -65,6 +70,7 @@ const Table = ({ data }) => {
     setSort({ key, direction });
   };
 
+  // Function to get the appropriate sort icon
   const getSortIcon = (store) => {
     if (sort.key === store) {
       if (sort.direction === "asc") {
@@ -108,6 +114,7 @@ const Table = ({ data }) => {
                 <td key={store}>{categoryData.total[store] || 0}</td>
               ))}
             </tr>
+            {/* Product rows (visible when category is expanded) */}
             {expandedCategories[category] &&
               Object.entries(categoryData.products).map(
                 ([product, productData]) => (

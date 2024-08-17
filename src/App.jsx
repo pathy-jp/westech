@@ -8,10 +8,12 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Effect hook to fetch data when the component mounts
   useEffect(() => {
     fetchData();
   }, []);
 
+  // Asynchronous function to fetch data from the API, no axios :(
   const fetchData = async () => {
     try {
       const response = await fetch("https://hiring.wdev.sk/fe-data");
