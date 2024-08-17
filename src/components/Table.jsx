@@ -16,10 +16,13 @@ const Table = ({ data }) => {
       if (!pivot[item.category].products[item.product]) {
         pivot[item.category].products[item.product] = {};
       }
+      if (!pivot[item.category].products[item.product][item.store]) {
+        pivot[item.category].products[item.product][item.store] = 0;
+      }
       if (!pivot[item.category].total[item.store]) {
         pivot[item.category].total[item.store] = 0;
       }
-      pivot[item.category].products[item.product][item.store] = item.pcs;
+      pivot[item.category].products[item.product][item.store] += item.pcs;
       pivot[item.category].total[item.store] += item.pcs;
       stores.add(item.store);
     });
