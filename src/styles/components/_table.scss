@@ -92,14 +92,35 @@
 @media (max-width: $breakpoint-tablet) {
   .pivot-table {
     font-size: 0.9rem;
+    display: block;
+    overflow-x: auto;
 
     th,
     td {
       padding: 1rem;
+      white-space: nowrap;
+    }
+
+    th:first-child {
+      background-color: $color-tertiary;
+    }
+
+    td:first-child {
+      background-color: inherit;
     }
 
     .product-row td:first-child {
-      padding-left: 2rem;
+      padding-left: 1.125rem;
+      font-size: 0.925rem;
+    }
+
+    th:first-child,
+    .product-row td:first-child,
+    .category-row td:first-child {
+      position: sticky;
+      left: 0;
+      z-index: 2;
+      box-shadow: inset -5px 0px 20px 0px rgba(0, 0, 0, 0.2);
     }
   }
 }
@@ -107,5 +128,6 @@
 @media (max-width: $breakpoint-desktop) {
   .pivot-table {
     overflow-x: auto;
+    display: block;
   }
 }
