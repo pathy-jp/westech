@@ -1,8 +1,17 @@
-# React + Vite
+# WesTech
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Vytvorte aplikáciu pre zobrazenie pivot tabuľky predajnosti kategórií a ich produktov podľa predajní. Každý riadok bude reprezentovaný kategóriou a jej príslušnými produktami, ktoré bude možné zobraziť a skryť. V predvolenom stave budú skryté.
 
-Currently, two official plugins are available:
+Stĺpce budú reprezentované jednotlivými predajňami a po kliku na jej názov sa aplikuje vzostupné / zostupné zoradenie. Zoradenie je taktiež možné zrušiť, UI implementáciu tejto funkcionality prenechávame na Vás.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Požadovanú štruktúru tabuľky nájdete v priloženom mocku.
+
+Dataset sa nachádza na https://hiring.wdev.sk/fe-data
+
+Podmienky:
+
+- Je možné použiť ľubovoľný reaktívny framework (Vue.js, React, Angular...)
+- Nie je možné použiť knižnicu, ktorá bola explicitne vytvorená pre tvorbu pivot tabuliek
+- Každá dodatočná NPM závislosť musí byť odôvodnená
+- Je možné použiť CSS framework podľa osobnej preferencie
+- Výsledok je potrebné odovzdať ako GIT repozitár alebo zip archív
